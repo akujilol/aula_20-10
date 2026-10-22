@@ -42,12 +42,27 @@ veiculosRouter.delete("/:id", async (req, res) => {
     }
 });
 
-veiculosRouter.put("/:id", async (req, res) =>{
+veiculosRouter.patch("/:id", async (req, res) =>{
     const veiculoId = req.params.id
     try{
-        const veiculo = await veiculosServices.updateData(veiculoId, req.body);
+        const veiculo = await veiculosServices.updatePatch(veiculoId, req.body);
         res.status(201).json(veiculo);
     }catch (error) {
         console.error(error)
     }
 })
+
+veiculosRouter.put("/:id", async (req, res) =>{
+    const veiculoId = req.params.id
+    console.log("body", req.body);
+    console.log("params", req.params);
+    
+    
+    try{
+        const veiculo = await veiculosServices.updatePut(veiculoId, req.body);
+        res.status(201).json(veiculo);
+    }catch (error) {
+        console.error(error)
+    }
+});
+
