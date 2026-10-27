@@ -1,68 +1,11 @@
 import { Router } from "express";
-import { veiculosServices } from "../services/service.js";
+import { veiculoController } from "../controller/veiculo.controller.js";
 
-export const veiculosRouter = Router();
+export const veiculoRouter = Router()
 
-veiculosRouter.get("/", async (req, res) => {
-    try {
-        const veiculos = await veiculosServices.getall();
-        res.json(veiculos);
-    }catch (error) {
-    
-        console.error (error);
-    }
-});
-
-veiculosRouter.get("/:id", async (req, res) => {
-    const VeiculoId = req.params.id;
-    try {
-        const veiculos = await veiculosServices.getById(VeiculoId);
-        res.json(veiculos);
-    }catch (error) {
-    
-        console.error (error);
-    }
-});
-veiculosRouter.post("/", async (req, res) => {
-    try {
-        const veiculos = await veiculosServices.create(req.body);
-         res.status(201).json(veiculos);
-    }catch (error) {
-        console.error (error);
-    }
-});
-
-veiculosRouter.delete("/:id", async (req, res) => {
-    const veiculoId = req.params.id
-    try {
-        const veiculo = await veiculosServices.delete(veiculoId);
-         res.status(201).json(veiculo);
-    }catch (error) {
-        console.error (error);
-    }
-});
-
-veiculosRouter.patch("/:id", async (req, res) =>{
-    const veiculoId = req.params.id
-    try{
-        const veiculo = await veiculosServices.updatePatch(veiculoId, req.body);
-        res.status(201).json(veiculo);
-    }catch (error) {
-        console.error(error)
-    }
-})
-
-veiculosRouter.put("/:id", async (req, res) =>{
-    const veiculoId = req.params.id
-    console.log("body", req.body);
-    console.log("params", req.params);
-    
-    
-    try{
-        const veiculo = await veiculosServices.updatePut(veiculoId, req.body);
-        res.status(201).json(veiculo);
-    }catch (error) {
-        console.error(error)
-    }
-});
-
+veiculoRouter.get("/", veiculoController.getAll);
+veiculoRouter.get("/id", veiculoController.getById);
+veiculoRouter.post("/", veiculoController.create);
+veiculoRouter.delete("/id", veiculoController.delete);
+veiculoRouter.put("/id", veiculoController.updatePut);
+veiculoRouter.patch("/id", veiculoController.updatePatch);
